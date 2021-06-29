@@ -1,10 +1,8 @@
 k8s personal learning
-## k8s install and use flexVolumen in minikube
-To SSH in minikube:
+## k8s install and use flexVolumen
+To setup kubernetes cluster apply all steps from https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
+NOTE: While applying calico plugin use the latest yaml from https://docs.projectcalico.org/getting-started/kubernetes/self-managed-onprem/onpremises
 
-```bash
-minikube ssh
-```
 Check if flex volume installed!! kubernetes check for location /usr/libexec/kubernetes/kubelet-plugins/volume/exec, for flexvolume
 
 ```bash
