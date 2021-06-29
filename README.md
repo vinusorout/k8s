@@ -226,3 +226,13 @@ sudo apt-get install jq -y
 sudo apt-get install util-linux -y
 sudo apt-get install coreutils -y
 ```
+
+Now run follwoing commands:
+
+```shell
+VOLUME_PLUGIN_DIR="/usr/libexec/kubernetes/kubelet-plugins/volume/exec"
+mkdir -p "$VOLUME_PLUGIN_DIR/fstab~cifs"
+cd "$VOLUME_PLUGIN_DIR/fstab~cifs"
+// create the above shell file here with name cifs
+chmod 755 cifs
+```
