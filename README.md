@@ -2,12 +2,12 @@ k8s personal learning
 ## k8s install and use flexVolumen in minikube
 To SSH in minikube:
 
-```sh
+```shell
 minikube ssh
 ```
 Check if flex volume installed!! kubernetes check for location /usr/libexec/kubernetes/kubelet-plugins/volume/exec, for flexvolume
 
-```sh
+```shell
 ls /usr/libexec/kubernetes/kubelet-plugins/volume/exec
 ```
 
