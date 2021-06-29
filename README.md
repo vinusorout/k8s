@@ -238,5 +238,63 @@ chmod 755 cifs
 ```
 
 
-Now set up SAMBA share using follwoing steps https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%20Samba%20Via%20CLI%20%28Command-line%20interface/Linux%20Terminal%29%20-%20Uncomplicated,%20Simple%20and%20Brief%20Way!
+Now set up SAMBA share using follwoing steps "https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%20Samba%20Via%20CLI%20%28Command-line%20interface/Linux%20Terminal%29%20-%20Uncomplicated,%20Simple%20and%20Brief%20Way!"
+
+
+Now create a secret.yaml file, this secret will be used while mounting the path:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cifs-secret
+  namespace: default
+type: fstab/cifs
+data:
+  username: '<base64 encoded user name of samba share>'
+  password: '<base64 encoded password of samba share>'
+```
+
+Pod.yaml:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: default
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: test
+      mountPath: /data
+  volumes:
+  - name: test
+    flexVolume:
+      driver: "fstab/cifs"
+      fsType: "cifs"
+      secretRef:
+        name: "cifs-secret"
+      options:
+        networkPath: "//<server_ip>/<sharename/sharefoldername>"
+        mountOptions: "dir_mode=0755,file_mode=0644,noperm"
+```
+
+Apply both the file to kubernetes.
+
+Now to check if this works or not:
+
+```shell
+kubectl exec -ti busybox /bin/sh
+ls data
+// create a new file in data, and then check in your actual samba server folder the same file
+```
+
+
 
