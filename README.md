@@ -1,4 +1,6 @@
 k8s personal learning
+
+## Both flexVolume and csi are out of tree plugins, for some clouds like aws, gce, vmware etc kubernetes provides some inbuilt or in-tree plugins.
 ## k8s install and use flexVolume
 To setup kubernetes cluster apply all steps from https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
 NOTE: While applying calico plugin use the latest yaml from https://docs.projectcalico.org/getting-started/kubernetes/self-managed-onprem/onpremises
@@ -296,5 +298,20 @@ ls data
 // create a new file in data, and then check in your actual samba server folder the same file
 ```
 
+## k8s install and use CSI (Container Storage Interface)
 
+For Samba share, we will use a csi driver created by kubernetes comunity (https://github.com/kubernetes-csi/csi-driver-smb)
+
+### Install csi-driver-smb
+
+```shell
+curl -skSL https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/v1.1.0/deploy/install-driver.sh | bash -s v1.1.0 --
+```
+
+After installation check pod status:
+
+```shell
+kubectl -n kube-system get pod -o wide --watch -l app=csi-smb-controller
+kubectl -n kube-system get pod -o wide --watch -l app=csi-smb-node
+```
 
