@@ -315,3 +315,88 @@ kubectl -n kube-system get pod -o wide --watch -l app=csi-smb-controller
 kubectl -n kube-system get pod -o wide --watch -l app=csi-smb-node
 ```
 
+### Access existing samba share with PVC
+
+### Create PV:
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-smb
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+    - vers=3.0
+  csi:
+    driver: smb.csi.k8s.io
+    readOnly: false
+    volumeHandle: unique-volumeid  # make sure it's a unique id in the cluster
+    volumeAttributes:
+      source: "//192.168.13.128/sharedpath" # smb server path
+    nodeStageSecretRef:
+      name: cifs-secret # secret name that hase username and password of samba share
+      namespace: default
+```
+
+### Create PVC:
+
+```yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-smb
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-smb
+  storageClassName: ""
+```
+
+### Create Pod with PVC:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busyboxwithpvc
+  namespace: default
+spec:
+  containers:
+  - name: busyboxwithpvc
+    image: busybox
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: test
+      mountPath: /data
+  volumes:
+  - name: test
+    persistentVolumeClaim:
+      claimName: pvc-smb
+
+```
+
+To verify if share is working use follwoing command:
+
+```shell
+kubectl exec -ti busyboxwithpvc /bin/sh
+ls data
+```
+
+### NOTE: In case of error after creating pod, check logs in smb container of csi-smb-node deployments:
+
+```shell
+kubectl logs csi-smb-node-8kwn8 -n kube-system -c smb
+```
+
