@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-09T17:54:29.150Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36" etag="yR95qyiMTvHzdc-wo1BU" version="17.0.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-09T18:02:34.950Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36" etag="l5lygAbnDtIGNo2wU3fR" version="17.0.0" type="github">
   <diagram id="fodR142t3LQC5FbwyXNy" name="Page-1">
     <mxGraphModel dx="1422" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -123,6 +123,20 @@
             <mxPoint x="350" y="440" as="sourcePoint" />
             <mxPoint x="330" y="595" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="t08y1QO3zHGYFeZgEVLe-41" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="t08y1QO3zHGYFeZgEVLe-39">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t08y1QO3zHGYFeZgEVLe-39" value="subdomains (sub1.ttx.com, sub2.ttx.com) hit the F5 lb, which redirect traffic to any of one worker nodes of current k8s clusters on port 80&amp;nbsp;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=12;verticalAlign=top;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="490" y="30" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="t08y1QO3zHGYFeZgEVLe-42" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.005;entryY=0.09;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="t08y1QO3zHGYFeZgEVLe-40" target="t08y1QO3zHGYFeZgEVLe-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t08y1QO3zHGYFeZgEVLe-40" value="on k8s clusters we have NGINX deployed as daemonset, and using the node port service." style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=12;verticalAlign=top;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="680" y="170" width="260" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
